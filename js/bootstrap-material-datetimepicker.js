@@ -18,7 +18,7 @@
       this.$element = $(element);
 
 
-      this.params = {date: true, time: true, format: 'YYYY-MM-DD', minDate: null, maxDate: null, currentDate: null, lang: 'en', weekStart: 0, disabledDays: [], shortTime: false, clearButton: false, nowButton: false, cancelText: 'Cancel', okText: 'OK', clearText: 'Clear', nowText: 'Now', switchOnClick: false, triggerEvent: 'focus', monthPicker: false, year:true};
+      this.params = {date: true, time: true, format: 'YYYY-MM-DD', minDate: null, maxDate: null, currentDate: null, lang: 'en', weekStart: 0, disabledDays: [], shortTime: false, clearButton: false, nowButton: false, cancelText: 'Cancel', okText: 'OK', clearText: 'Clear', nowText: 'Now', switchOnClick: false, triggerEvent: 'focus', monthPicker: false, year:true,interval:false,intervalTime:5};
       this.params = $.fn.extend(this.params, options);
 
       this.name = "dtp_" + this.setName();
@@ -477,7 +477,15 @@
                        svgMinuteCircle.className += " disabled";
                     } else
                     {
-                       svgMinuteCircle.addEventListener('click', this._onSelectMinute.bind(this));
+                       if(this.params.interval===true){
+                           if ((i % this.params.intervalTime) === 0) {     
+                              if(this.params.intervalTime+i){            
+                                 svgMinuteCircle.addEventListener('click', this._onSelectMinute.bind(this));
+                              }
+                           }
+                        }else{
+                           svgMinuteCircle.addEventListener('click', this._onSelectMinute.bind(this));
+                        }
                     }
 
                     svgClockElement.appendChild(svgMinuteCircle)
@@ -485,7 +493,7 @@
 
                  for (var i = 0; i < 60; i++)
                  {
-                    if ((i % 5) === 0)
+                    if ((i % this.params.intervalTime) === 0)
                     {
                        var x = -(162 * (Math.sin(-Math.PI * 2 * (i / 60))));
                        var y = -(162 * (Math.cos(-Math.PI * 2 * (i / 60))));
@@ -501,7 +509,13 @@
                           svgMinuteText.setAttribute('fill', '#bdbdbd');
                        } else
                        {
-                          svgMinuteText.addEventListener('click', this._onSelectMinute.bind(this));
+                           if(this.params.interval===true){
+                              if(this.params.intervalTime+i){
+                                 svgMinuteText.addEventListener('click', this._onSelectMinute.bind(this));
+                              }
+                           }else{
+                              svgMinuteText.addEventListener('click', this._onSelectMinute.bind(this));
+                           }
                        }
 
                        svgClockElement.appendChild(svgMinuteText)
