@@ -78,6 +78,8 @@ Google Material Icon Font `<link href="https://fonts.googleapis.com/icon?family=
 | **nowText**		| String						| Text for the Now button (default: Now)		|
 | **triggerEvent**		| String						| Event to fire the calendar (default: focus)		|
 | **monthPicker**	| Boolean						| true => Act as monthpicker (hide calendar) (default: false) |
+| **interval**	| Boolean						| true => interval condition (5 mins interval or any other value) (default: false) |
+| **intervalTime**	| String						| Example:5 it display 5 minuts interval (default: 5) |
 
 
 
